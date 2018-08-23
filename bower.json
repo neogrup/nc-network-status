@@ -1,6 +1,6 @@
 {
   "name": "nc-network-status",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Polymer component to check the network status",
   "authors": [
     "edgar.piera@neogrup.com"

@@ -36,7 +36,10 @@
 
     <div class$="{{signalClass}}">
       <iron-icon icon$="{{signalIcon}}" ></iron-icon>
-      <div hidden$="{{!showMs}}">[[requestTime]]</div>
+      <template is="dom-if" if="{{showMs}}">
+        <div>[[requestTime]]</div>
+      </template>
+      
     </div>
   </template>
 
