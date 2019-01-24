@@ -82,7 +82,6 @@
       connectedCallback() {
         super.connectedCallback();
         if (typeof this._timerId == "undefined") {
-          //this._timerId = setInterval(() => this._getNetworkStatus(), this.reconnectTime);
           this.retries = 0;
           this._getNetworkStatus();
         }
@@ -94,7 +93,6 @@
       }
 
       _delayedGetNetworkStatus(timeout) {
-        console.log('delayed call', timeout);
         setTimeout(function() {
           this._getNetworkStatus()
         }.bind(this), timeout);
@@ -128,12 +126,11 @@
 
       _handleGetNetworkStatusResponse(response) {
         this.requestTime = (Date.now() - this.requestInitTime) + ' ms';
-        console.log('requested', this.requestTime);
         this._setCurrentStatus(Date.now() - this.requestInitTime);
         let timeNew = this.reconnectTime;
         //slow down if everything working for a while
         if (this.retries > 3) {
-          timeNew = timeNew + 6*1000
+          timeNew = timeNew + this.reconnectTime*2;
         } else if (this.retries > 20) {
           this.retries = 0;
         }        
