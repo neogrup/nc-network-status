@@ -6,10 +6,10 @@
 
     <title>nc-network-status demo</title>
 
-    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../nc-network-status.html">
 
     <custom-style>
@@ -23,31 +23,32 @@
       <demo-snippet>
         <template>
           <nc-network-status
-              url="http://192.168.90.37:3001/neopda/getversion"
+              url="http://192.168.90.37:3001/api/v1/pos/info"
               show-ms></nc-network-status>
         </template>
       </demo-snippet>
     </div>
+    <!-- <div class="vertical-section-container centered">
+      <h3>Basic nc-network-status demo</h3>
+      <demo-snippet>
+        <template>
+          <nc-network-status
+              url="http://192.168.90.37:3001/api/v1/pos/info"></nc-network-status>
+        </template>
+      </demo-snippet>
+    </div>
+
     <div class="vertical-section-container centered">
-        <h3>Basic nc-network-status demo</h3>
-        <demo-snippet>
-          <template>
-            <nc-network-status
-                url="http://192.168.90.37:3001/neopda/getversion"></nc-network-status>
-          </template>
-        </demo-snippet>
-      </div>
+      <h3>Basic nc-network-status demo with reconnect time</h3>
+      <demo-snippet>
+        <template>
+          <nc-network-status
+              url="http://192.168.90.37:3001/api/v1/pos/info"
+              reconnect-time="10000"></nc-network-status>
+        </template>
+      </demo-snippet>
+    </div> -->
   </body>
 
-  <div class="vertical-section-container centered">
-    <h3>Basic nc-network-status demo with reconnect time</h3>
-    <demo-snippet>
-      <template>
-        <nc-network-status
-            url="http://192.168.90.37:3001/neopda/getversion"
-            reconnect-time="10000"></nc-network-status>
-      </template>
-    </demo-snippet>
-  </div>
 </body>
 </html>
