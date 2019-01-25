@@ -6,11 +6,15 @@
 
     <title>nc-network-status demo</title>
 
-    <script src="../bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../nc-network-status.html">
+    <script type="module">
+      import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+      import '@polymer/iron-demo-helpers/demo-snippet';
+    </script>
+
+
+    <script type="module" src="../nc-network-status.js"></script>
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -28,7 +32,7 @@
         </template>
       </demo-snippet>
     </div>
-    <!-- <div class="vertical-section-container centered">
+    <div class="vertical-section-container centered">
       <h3>Basic nc-network-status demo</h3>
       <demo-snippet>
         <template>
@@ -47,7 +51,7 @@
               reconnect-time="10000"></nc-network-status>
         </template>
       </demo-snippet>
-    </div> -->
+    </div>
   </body>
 
 </body>
