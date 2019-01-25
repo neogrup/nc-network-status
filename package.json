@@ -10,7 +10,7 @@
     "url": "https://github.com/NEOGRUP/nc-network-status"
   },
   "homepage": "",
-  "name": "@polymer/nc-network-status",
+  "name": "@neogrup/nc-network-status",
   "version": "2.0.0",
   "resolutions": {
     "inherits": "2.0.3",
