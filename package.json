@@ -9,9 +9,8 @@
     "type": "git",
     "url": "https://github.com/NEOGRUP/nc-network-status"
   },
-  "homepage": "",
   "name": "@neogrup/nc-network-status",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
@@ -28,7 +27,6 @@
   },
   "devDependencies": {
     "@polymer/iron-demo-helpers": "^3.0.0",
-    "wct-browser-legacy": "^1.0.1",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   }
 }
