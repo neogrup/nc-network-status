@@ -16,18 +16,26 @@ class NcNetworkStatus extends PolymerElement {
       }
 
       .green {
-        color: #388E3C;
+        /* color: #388E3C; */
       }
 
       .orange{
-        color: #F57C00;
+        /* color: #F57C00; */
       }
 
       .red {
-        color: #D32F2F;
+        /* color: #D32F2F; */
       }
     </style>
-    <iron-ajax id="getNetworkStatus" url="{{url}}" method="get" handle-as="json" last-response="{{networkStatusData}}" on-response="_handleGetNetworkStatusResponse" on-error="_handleGetNetworkStatusError">
+    <iron-ajax 
+        id="getNetworkStatus" 
+        url="{{url}}" 
+        method="get" 
+        handle-as="json" 
+        timeout=2200
+        last-response="{{networkStatusData}}" 
+        on-response="_handleGetNetworkStatusResponse" 
+        on-error="_handleGetNetworkStatusError">
     </iron-ajax>
 
     <div class\$="{{signalClass}}">
@@ -52,7 +60,7 @@ class NcNetworkStatus extends PolymerElement {
       },
       reconnectTime: {
         type: Number,
-        value: 4000
+        value: 2000
       },
       requestInitTime: {
         type: Number
@@ -125,7 +133,7 @@ class NcNetworkStatus extends PolymerElement {
     let timeNew = this.reconnectTime;
     //slow down if everything working for a while
     if (this.retries > 3) {
-      timeNew = timeNew + this.reconnectTime * 2;
+      timeNew = timeNew + this.reconnectTime * 3;
     } else if (this.retries > 20) {
       this.retries = 0;
     }        
