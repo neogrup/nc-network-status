@@ -2,6 +2,7 @@ import {html, PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-icons/device-icons.js';
 import '@polymer/iron-ajax/iron-ajax.js';
+import '@polymer/paper-ripple/paper-ripple.js';
 class NcNetworkStatus extends PolymerElement {
   static get template() {
     return html`
@@ -13,18 +14,6 @@ class NcNetworkStatus extends PolymerElement {
       div {
         @apply --layout-horizontal;
         @apply --layout-center;
-      }
-
-      .green {
-        /* color: #388E3C; */
-      }
-
-      .orange{
-        /* color: #F57C00; */
-      }
-
-      .red {
-        /* color: #D32F2F; */
       }
     </style>
     <iron-ajax 
@@ -38,13 +27,14 @@ class NcNetworkStatus extends PolymerElement {
         on-error="_handleGetNetworkStatusError">
     </iron-ajax>
 
-    <div class\$="{{signalClass}}">
+    <div>
       <iron-icon icon\$="{{signalIcon}}"></iron-icon>
       <template is="dom-if" if="{{showMs}}">
         <div>[[requestTime]]</div>
       </template>
 
     </div>
+    <paper-ripple class="circle" recenters></paper-ripple>
 `;
   }
 
@@ -75,10 +65,6 @@ class NcNetworkStatus extends PolymerElement {
       signalIcon: {
         type: String,
         value: 'device:signal-cellular-0-bar'
-      },
-      signalClass: {
-        type: String,
-        value: ''
       }
     };
   }
@@ -104,23 +90,19 @@ class NcNetworkStatus extends PolymerElement {
 
   _setCurrentStatus(requestTime) {
     if (requestTime === -1) {
+      this._animateIcon();
       this.signalIcon = 'device:signal-cellular-connected-no-internet-0-bar';
-      this.signalClass = 'red';
-    } else if (requestTime > 2000) {
+    } else if (requestTime > 1500) {
+      this._animateIcon();
       this.signalIcon = 'device:signal-cellular-0-bar';
-      this.signalClass = 'red';
-    } else if (requestTime > 1000) {
+    } else if (requestTime > 750) {
       this.signalIcon = 'device:signal-cellular-1-bar';
-      this.signalClass = 'orange';
     } else if (requestTime > 500) {
       this.signalIcon = 'device:signal-cellular-2-bar';
-      this.signalClass = 'orange';
     } else if (requestTime > 170) {
       this.signalIcon = 'device:signal-cellular-3-bar';
-      this.signalClass = 'green';
     } else if (requestTime > 0) {
       this.signalIcon = 'device:signal-cellular-4-bar';
-      this.signalClass = 'green';
     } else {
       // When counter has a negative a value (because of an overflow)
       this.signalIcon = 'device:signal-cellular-2-bar';
@@ -133,7 +115,7 @@ class NcNetworkStatus extends PolymerElement {
     let timeNew = this.reconnectTime;
     //slow down if everything working for a while
     if (this.retries > 3) {
-      timeNew = timeNew + this.reconnectTime * 3;
+      timeNew = timeNew + this.reconnectTime * 2;
     } else if (this.retries > 20) {
       this.retries = 0;
     }        
@@ -146,6 +128,13 @@ class NcNetworkStatus extends PolymerElement {
     this.retries = 0;
     this._delayedGetNetworkStatus(this.reconnectTime);
     this.requestTime = '';
+  }
+
+  _animateIcon(){
+    if (this.shadowRoot.querySelector('paper-ripple')){
+      this.shadowRoot.querySelector('paper-ripple').downAction();
+      this.shadowRoot.querySelector('paper-ripple').upAction();
+    }
   }
 }
 
