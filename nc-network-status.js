@@ -117,6 +117,8 @@ class NcNetworkStatus extends PolymerElement {
     if (this.retries > 3) {
       timeNew = timeNew + this.reconnectTime * 2;
     } else if (this.retries > 20) {
+      timeNew = timeNew + this.reconnectTime * 3;
+    } else if (this.retries > 40) {
       this.retries = 0;
     }        
     this.retries = this.retries + 1;
