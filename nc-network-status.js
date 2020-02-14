@@ -15,6 +15,10 @@ class NcNetworkStatus extends PolymerElement {
         @apply --layout-horizontal;
         @apply --layout-center;
       }
+
+      paper-ripple {
+        color: var(--app-accent-color);
+      }
     </style>
     <iron-ajax 
         id="getNetworkStatus" 
@@ -34,7 +38,7 @@ class NcNetworkStatus extends PolymerElement {
       </template>
 
     </div>
-    <paper-ripple class="circle" recenters></paper-ripple>
+    <paper-ripple class="circle" initial-opacity="0.5" recenters></paper-ripple>
 `;
   }
 
