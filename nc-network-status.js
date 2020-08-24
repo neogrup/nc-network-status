@@ -31,6 +31,14 @@ class NcNetworkStatus extends PolymerElement {
         on-error="_handleGetNetworkStatusError">
     </iron-ajax>
 
+    <iron-ajax 
+        id="getServiceStatus" 
+        url="{{url}}" 
+        method="get" 
+        handle-as="json" 
+        timeout=2200>
+    </iron-ajax>
+
     <div>
       <iron-icon icon\$="{{signalIcon}}"></iron-icon>
       <template is="dom-if" if="{{showMs}}">
@@ -69,7 +77,11 @@ class NcNetworkStatus extends PolymerElement {
       signalIcon: {
         type: String,
         value: 'device:signal-cellular-0-bar'
-      }
+      },
+      serviceOnline: {
+        type: Boolean,
+        value: false
+      },
     };
   }
 
@@ -141,6 +153,13 @@ class NcNetworkStatus extends PolymerElement {
       this.shadowRoot.querySelector('paper-ripple').downAction();
       this.shadowRoot.querySelector('paper-ripple').upAction();
     }
+  }
+  
+  getServiceStatus() {
+    return this.$.getServiceStatus.generateRequest().completes.then(
+        request => this.serviceOnline = true,
+        request => this.serviceOnline = false
+    );
   }
 }
 
