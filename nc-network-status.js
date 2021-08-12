@@ -82,6 +82,9 @@ class NcNetworkStatus extends PolymerElement {
         type: Boolean,
         value: false
       },
+      connectionLostTime: {
+        type: Date,
+      }
     };
   }
 
@@ -139,13 +142,25 @@ class NcNetworkStatus extends PolymerElement {
     }        
     this.retries = this.retries + 1;
     this._delayedGetNetworkStatus(timeNew);
+
+    if (this.connectionLostTime != null){
+      // console.debug('The app has lost connection (' + this.connectionLostTime + ') and has been recovered (' + new Date().toLocaleString() + ')');
+      this.dispatchEvent(new CustomEvent('notifyAppError', {detail:{message: 'The app has lost connection (' + this.connectionLostTime + ') and has been recovered (' + new Date().toLocaleString() + ')', trace: '_handleGetNetworkStatusResponse'}, bubbles: true, composed: true }));
+      this.connectionLostTime = null;
+    }
+
   }
 
   _handleGetNetworkStatusError(error) {
+
     this._setCurrentStatus(-1);
     this.retries = 0;
     this._delayedGetNetworkStatus(this.reconnectTime);
     this.requestTime = '';
+
+    if (this.connectionLostTime == null){
+      this.connectionLostTime = new Date().toLocaleString();
+    }
   }
 
   _animateIcon(){

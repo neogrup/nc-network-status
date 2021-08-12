@@ -10,7 +10,7 @@
     "url": "https://github.com/NEOGRUP/nc-network-status"
   },
   "name": "@neogrup/nc-network-status",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",
