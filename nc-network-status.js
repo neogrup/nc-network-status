@@ -40,7 +40,7 @@ class NcNetworkStatus extends PolymerElement {
     </iron-ajax>
 
     <div>
-      <iron-icon icon\$="{{signalIcon}}"></iron-icon>
+      <iron-icon id="signalIcon" icon$="{{signalIcon}}"></iron-icon>
       <template is="dom-if" if="{{showMs}}">
         <div>[[requestTime]]</div>
       </template>
@@ -84,7 +84,11 @@ class NcNetworkStatus extends PolymerElement {
       },
       connectionLostTime: {
         type: Date,
-      }
+      },
+      remoteServerLive: {
+        type: Boolean,
+        value: false
+      } 
     };
   }
 
@@ -94,6 +98,7 @@ class NcNetworkStatus extends PolymerElement {
       this.retries = 0;
       this._getNetworkStatus();
     }
+    this.defaultColor = this.$.signalIcon.style.color;
   }
 
   _getNetworkStatus() {
@@ -141,12 +146,21 @@ class NcNetworkStatus extends PolymerElement {
       this.retries = 0;
     }        
     this.retries = this.retries + 1;
-    this._delayedGetNetworkStatus(timeNew);
+    this._delayedGetNetworkStatus(timeNew);    
 
     if (this.connectionLostTime != null){
       // console.debug('The app has lost connection (' + this.connectionLostTime + ') and has been recovered (' + new Date().toLocaleString() + ')');
       this.dispatchEvent(new CustomEvent('notifyAppError', {detail:{message: 'The app has lost connection (' + this.connectionLostTime + ') and has been recovered (' + new Date().toLocaleString() + ')', trace: '_handleGetNetworkStatusResponse'}, bubbles: true, composed: true }));
       this.connectionLostTime = null;
+    }
+
+    // if not live
+    if (response && response.detail && response.detail.xhr && response.detail.xhr.response && response.detail.xhr.response.data && response.detail.xhr.response.data.remoteServer && !response.detail.xhr.response.data.remoteServer.live) {
+      this.remoteServerLive = false;
+      this.$.signalIcon.style.color = 'red';
+    } else {
+      this.remoteServerLive = true;
+      this.$.signalIcon.style.color = this.defaultColor;
     }
 
   }
